@@ -1,37 +1,47 @@
-import React, { useState } from "react";
-import { puppyList } from "./data.js";
-import "./App.css";
+import {puppyList} from './data.js'
+import { useState } from 'react'
+import './App.css'
+import './puppy.css'
 
 function App() {
-  // Initialize the puppies state with the puppyList array
-  const [puppies, setPuppies] = useState(puppyList);
-  const [featPupId, setFeatPupId] = useState(null);
-  const featuredPup = puppies.find((pup) => pup.id === featPupId);
 
-  console.log(featuredPup);
+const [puppies, setPuppies] = useState(puppyList)
+const [featPupId, setFeatPupId] = useState(null)
+const [featuredPup, setFeaturedPup] = useState(null)
 
+console.log(puppies)
   return (
-    <div className="root">
-      <div className="card">
-        {puppies.map((puppy) => {
-          return (
-            <p key={puppy.id} onClick={() => setFeatPupId(puppy.id)}>
-              {puppy.name}
-            </p>
-          );
-        })}
+    <>
+      <div>
+      {
+        puppies.map((puppy) => {
+          return <p onClick = { () => {
+            setFeaturedPup(puppy)
+            setFeatPupId(puppy.id)}
+        } key = {puppy.id} > {puppy.name} </p>
+        } )
+      }
+
+      {featuredPup && (
+      
+      <div>
+        <h1> Our Puppy Pals </h1>
+        <h1 className ={"puppy-header"}> {featuredPup.name} </h1>
+      <ul> <h2> Click a Puppy to See Details </h2>
+        <li> Featured Puppy Id#: {featPupId}</li>
+        <li> Age: {featuredPup.age}</li>
+        <li> Email Address: {featuredPup.email}</li>
+        <li> Ownder ID#: {featuredPup.ownerId}</li>
+        <li> Number of tricks: {featuredPup.tricks.length}</li>
+      </ul>
       </div>
-      {featPupId && featuredPup && (
-        <div className="card">
-          <h2>{featuredPup.name}</h2>
-          <ul>
-            <li>Age: {featuredPup.age}</li>
-            <li>Email: {featuredPup.email}</li>{" "}
-          </ul>
-        </div>
+
       )}
-    </div>
-  );
+      
+      </div>
+
+    </>
+  )
 }
 
-export default App;
+export default App
